@@ -1,16 +1,22 @@
-//your JS code here. If required.
-let output=document.querySelector("span");
+document.getElementById("btn").addEventListener("click", async () => {
+  const text = document.getElementById("text").value; // Retrieve the text
+  const delay = Number(document.getElementById("delay").value); // Retrieve the delay as a number
+  const outputDiv = document.getElementById("output");
 
-document.querySelector("button").addEventListener("click",async ()=>{
-    let text=document.querySelector("#text").value;
-    let time=document.querySelector("#delay").value;
-    let p=new Promise((resolve,reject)=>{
-    setTimeout(()=>{
-       resolve(text);
-    },Number(time));
-  });
-  let k1=await p;
-  output.textContent=k1;
-  document.querySelector("#text").value="";
-  document.querySelector("#delay").value="";
-})
+  // Validate the input fields
+  if (!text || isNaN(delay) || delay < 0) {
+    outputDiv.textContent = "Please enter valid text and a positive delay.";
+    return;
+  }
+
+  // Function to create a delay using a promise
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  outputDiv.textContent = "Processing...";
+
+  // Wait for the specified delay
+  await wait(delay);
+
+  // Display the text after the delay
+  outputDiv.textContent = text;
+});
